@@ -3,5 +3,5 @@ CREATE TABLE student(Student_id INT, User_id INT, major VARCHAR(50) NOT NULL, mi
 CREATE TABLE extra_credit(EC_id INT, Student_id INT, EC_name VARCHAR(50) NOT NULL, EC_datetime DATETIME, PRIMARY KEY (EC_id), FOREIGN KEY (Student_id) REFERENCES student (student_id));
 CREATE TABLE personal
 CREATE TABLE work
-CREATE TABLE class(Class_id INT, Class_name VARCHAR(50) NOT NULL, Class_time TIME NOT NULL, Room VARCHAR(50) NOT NULL, PRIMARY KEY (Class_id), FOREIGN KEY (Student_id) REFERENCES student (Student_id));
+CREATE TABLE class(Class_id INT, Class_name VARCHAR(50) NOT NULL, Class_time DATETIME NOT NULL, Room VARCHAR(50) NOT NULL, PRIMARY KEY (Class_id), FOREIGN KEY (Student_id) REFERENCES student (Student_id));
 CREATE TABLE Assignment(Assignment_id INT, Assignment_name VARCHAR(50) NOT NULL, Due_time DATETIME NOT NULL, PRIMARY KEY (Assignment_name), FOREIGN KEY (Class_id) REFERENCES class (Class_id));
