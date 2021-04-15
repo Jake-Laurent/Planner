@@ -1,7 +1,7 @@
-CREATE TABLE customer(Customer_id INT, name VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL, birthday VARCHAR(50) NOT NULL, email VARCHAR(50) NOT NULL, PRIMARY KEY (Customer_id)); 
-CREATE TABLE student(Student_id INT, User_id INT, major VARCHAR(50) NOT NULL, minor VARCHAR(50), 
-CREATE TABLE class
+CREATE TABLE User(User_id INT, name VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL, birthday VARCHAR(50) NOT NULL, email VARCHAR(50) NOT NULL, PRIMARY KEY (Customer_id)); 
+CREATE TABLE student(Student_id INT, User_id INT, major VARCHAR(50) NOT NULL, minor VARCHAR(50), year
+CREATE TABLE ec
 CREATE TABLE personal
 CREATE TABLE work
-CREATE TABLE ec
+CREATE TABLE class
 CREATE TABLE Assignment
