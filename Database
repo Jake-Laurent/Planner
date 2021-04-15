@@ -1,6 +1,6 @@
-CREATE TABLE user(User_id INT, name VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL, birthday VARCHAR(50) NOT NULL, email VARCHAR(50) NOT NULL, PRIMARY KEY (User_id)); 
-CREATE TABLE student(Student_id INT, User_id INT, major VARCHAR(50) NOT NULL, minor VARCHAR(50), year INT, PRIMARY KEY (Student_id), FOREIGN KEY (User_id) REFERENCES user (User_id));
-CREATE TABLE extra_credit(EC_id INT, Student_id INT, EC_name VARCHAR(50) NOT NULL, EC_datetime DATETIME, PRIMARY KEY (EC_id), FOREIGN KEY (Student_id) REFERENCES student (student_id));
+CREATE TABLE user(User_id INT NOT NULL, name VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL, birthday VARCHAR(50) NOT NULL, email VARCHAR(50) NOT NULL, PRIMARY KEY (User_id)); 
+CREATE TABLE student(Student_id INT NOT NULL, User_id INT NOT NULL, major VARCHAR(50) NOT NULL, minor VARCHAR(50), year INT NOT NULL, PRIMARY KEY (Student_id), FOREIGN KEY (User_id) REFERENCES user (User_id));
+CREATE TABLE extra_credit(EC_id INT NOT NULL, Student_id INT NOT NULL, EC_name VARCHAR(50) NOT NULL, EC_datetime DATETIME NOT NULL, PRIMARY KEY (EC_id), FOREIGN KEY (Student_id) REFERENCES student (student_id));
 CREATE TABLE personal
 CREATE TABLE work
 CREATE TABLE class(Class_id INT, Class_name VARCHAR(50) NOT NULL, Class_time DATETIME NOT NULL, Room VARCHAR(50) NOT NULL, PRIMARY KEY (Class_id), FOREIGN KEY (Student_id) REFERENCES student (Student_id));
