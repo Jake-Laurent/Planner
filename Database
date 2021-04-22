@@ -1,7 +1,7 @@
 CREATE TABLE users(User_id INT NOT NULL, name VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL, birthday VARCHAR(50) NOT NULL, email VARCHAR(50) NOT NULL, PRIMARY KEY (User_id)); 
 CREATE TABLE student(Student_id INT NOT NULL, User_id INT NOT NULL, major VARCHAR(50) NOT NULL, minor VARCHAR(50), year INT NOT NULL, PRIMARY KEY (Student_id), FOREIGN KEY (User_id) REFERENCES users (User_id));
-CREATE TABLE extra_curricular(EC_id INT NOT NULL, Student_id INT NOT NULL, EC_name VARCHAR(50) NOT NULL, EC_datetime DATETIME NOT NULL, PRIMARY KEY (EC_id), FOREIGN KEY (Student_id) REFERENCES student (student_id));
-CREATE TABLE personal(To_Do_id INT, User_id INT, Personal_to_do_name VARCHAR(50) NOT NULL, P_datetime datetime NOT NULL, PRIMARY KEY (To_do_id), FOREIGN KEY (User_id));
-CREATE TABLE work(Work_toDo_id INT, User_id INT, Work_name VARCHAR(50) NOT NULL, W_datetime datetime NOT NULL, PRIMARY KEY (Work_ToDo_ID), FOREIGN KEY (User_id));
+CREATE TABLE extra_curricular(EC_id INT NOT NULL, Student_id INT NOT NULL, EC_name VARCHAR(50) NOT NULL, EC_date DATETIME NOT NULL, PRIMARY KEY (EC_id), FOREIGN KEY (Student_id) REFERENCES student (student_id));
+CREATE TABLE personal(To_Do_id INT, User_id INT, Personal_to_do_name VARCHAR(50) NOT NULL, P_datetime datetime NOT NULL, PRIMARY KEY (To_do_id), FOREIGN KEY (User_id) REFERENCES users (User_id));
+CREATE TABLE work(Work_toDo_id INT, User_id INT, Work_name VARCHAR(50) NOT NULL, W_datetime datetime NOT NULL, PRIMARY KEY (Work_ToDo_ID), FOREIGN KEY (User_id) REFERENCES users (User_id));
 CREATE TABLE class(Class_id INT, Class_name VARCHAR(50) NOT NULL, Class_time DATETIME NOT NULL, Room VARCHAR(50) NOT NULL, PRIMARY KEY (Class_id), FOREIGN KEY (Student_id) REFERENCES student (Student_id));
 CREATE TABLE Assignment(Assignment_id INT, Assignment_name VARCHAR(50) NOT NULL, Due_time DATETIME NOT NULL, PRIMARY KEY (Assignment_name), FOREIGN KEY (Class_id) REFERENCES class (Class_id));
