@@ -7,13 +7,16 @@
     <title>Student Planner:</title>
 </head>
 <body>
-    <h2>Log in:</h2>
-    <label>Username:</label>
-    <input class="logintxt" name="usernamebox" type="text"></input>
-    <br>
-    <label>Password:</label>
-    <input class="logintxt" name"passwordbox" type="text"></input>
-    <br>
-    <a href="Homepage.html">Log In</a>
+    <form action="/action_page.php"> <!-- on submit, form data will be sent to a page named action_page.php, I left the log in link in for testing purposes -->
+        <h2>Log in:</h2>
+        <label>Username:</label>
+        <input class="logintxt" name="usernamebox" type="text"></input>
+        <br>
+        <label>Password:</label>
+        <input class="logintxt" name"passwordbox" type="text"></input>
+        <br>
+        <input type="submit" value="Submit">
+        <a href="Homepage.html">Log In</a>
+    </form>
 </body>
 </html>
