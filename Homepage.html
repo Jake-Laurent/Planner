@@ -33,6 +33,16 @@
     <!-- add elements for adding to-dos here -->
     <h2>Add Your To-Dos:</h2>
     <form action="/action_page.php">
+        <div>
+            <input type="radio" name="to-do-type" id="personal" value="personal">
+            <label>Personal</label>
+            <input type="radio" name="to-do-type" id="work" value="work">
+            <label>Work</label>
+            <input type="radio" name="to-do-type" id="class" value="class">
+            <label>Class</label>
+            <input type="radio" name="to-do-type" id="excur" value="extra-curricular">
+            <label>Extra Curricular</label>
+        </div>
         <label>Name:</label>
         <input type="text" id="add-name">
         <label>Due Date:</label>
