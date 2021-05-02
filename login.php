@@ -7,7 +7,17 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     exit;
 }
  
-require_once "config.php";
+ $myfile = fopen("../pg_connection_info.txt", "r") or die("Unable to open \"../pg_connection_info.txt\" file!");
+    $my_host = fgets($myfile);
+    $my_dbname = fgets($myfile);
+    $my_user = fgets($myfile);
+    $my_password = fgets($myfile);
+    fclose($myfile);
+
+    $dbhost = pg_connect("host=$my_host dbname=$my_dbname user=$my_user password=$my_password");
+    if(!$dbhost) {
+        die("Error: " .pg_last_error());
+      }
  
 $name = $password = "";
 $name_err = $password_err = $login_err = "";
@@ -30,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $sql = "SELECT User_id, name, password FROM users WHERE name = ?";
         
-        if($stmt = mysqli_prepare($link, $sql)){
+        if($stmt = mysqli_prepare($dbhost, $sql)){
  
             mysqli_stmt_bind_param($stmt, "s", $param_name);
 
@@ -70,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 
-    mysqli_close($link);
+    mysqli_close($dbhost);
 }
 ?>
  
