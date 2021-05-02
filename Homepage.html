@@ -72,5 +72,26 @@
 	 <input type="submit" value="Remove">
     </form>
   </div>
+  <!-- this php code gets sql data -->
+  <?php 
+    $sql = "SELECT * FROM users"; 
+    $results = pg_query($dbhost, $sql);
+    
+    if(!$results){
+        die("Error in querey: " .pg_last_error());
+    }
+
+        while($row = pg_fetch_array($results)){
+            echo "Id:" . $row[0] . " Name: " . $row[1] . " Password: " . $row[2] . " Birthday: " . 
+            $row[3] . " Email: " . $row[4] . "<br/>\n";
+            }
+
+    //pg_free_results($results);
+    pg_close($dbhost);
+  ?>
  </body>
  </html>
+
+ 
+ 
+ 
