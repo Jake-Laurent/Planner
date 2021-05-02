@@ -7,8 +7,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 ?>
-
-<!DOCTYPE html>
+ <!DOCTYPE html>
  <html lang="en">
  <head>
  <meta charset="UTF-8">
@@ -19,7 +18,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
  <title>Project</title>
  </head>
  <body>
-<a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
+ <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
 <?php
     $myfile = fopen("../pg_connection_info.txt", "r") or die("Unable to open \"../pg_connection_info.txt\" file!");
     $my_host = fgets($myfile);
@@ -35,29 +34,27 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 ?>
 
+
 <!-- want upcoming to-dos, all to-dos, and add a to-do -->
 <div id="upcoming">
     <!-- add elements for upcoming to-dos here -->
-    <h2>Upcoming To-Dos:</h2>
+    <!-- 
+    <h2>Upcoming To-Dos:</h2> 
 </div>
-<br>
+<br>-->
 <div id="add">
     <!-- add elements for adding to-dos here -->
-    <h2>Add Your To-Dos:</h2>
+    <h2>Add Your Personal/Work To-Dos:</h2>
     <form action="project.php" method="GET">
         <div>
-            <input type="radio" name="to-do-type" id="personal" value="personal" required="required">
+            <input type="radio" name="PWto-do-type" id="personal" value="personal" required="required">
             <label>Personal</label>
-            <input type="radio" name="to-do-type" id="work" value="work" required="required">
+            <input type="radio" name="PWto-do-type" id="work" value="work" required="required">
             <label>Work</label>
-            <input type="radio" name="to-do-type" id="class" value="class" required="required">
-            <label>Class</label>
-            <input type="radio" name="to-do-type" id="excur" value="extra-curricular" required="required">  
-          <label>Extra Curricular</label>
         </div>
 
         <label>Name:</label>
-        <input type="text" name="add-name" pattern="[A-Za-z0-9]{1,100}" placeholder="1-100 letters">
+        <input type="text" name="add-name" pattern="[A-Za-z0-9 ]{1,100}" placeholder="1-100 Characters,">
         <label>Due Date:</label>
         <input type="date" name="add-date" >
         <label>Due Time:</label>
@@ -67,21 +64,87 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <input type="Submit" value="Add">
     </form>
     <br>
-    The radio button selected was: <?php echo $_GET["to-do-type"]?>
+    The radio button selected was: <?php echo $_GET["PWto-do-type"]?>
     <br>
-    The information added is: <?php echo "Name: " . $_GET["add-name"]. " Date: " . $_GET["add-date"] . " Time: " . $_GET["add-time"];?>
+    The following information was added: <?php echo "Name: " . $_GET["add-name"]. " Date: " . $_GET["add-date"] . " Time: " . $_GET["add-time"];?>
     
  </div>
  <br>
  <div id="remove">
  	<!-- remove elements for to-dos here -->
- 	<h2>Remove Your To-Dos:</h2>
- 	<form action="/action_page.php">
+ 	<h2>Remove Your Personal/Work To-Do:</h2>
+ 	<form action="project.php">
  		<label>To-Do ID:</label>
  		<input type="text" name="remove-to-do">
  <br>
 	 <input type="submit" value="Remove">
     </form>
   </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  
+  <!-- start of school section -->
+  
+  <h2>Add Your School To-Dos:</h2>
+    <form action="project.php" method="GET">
+        <div>
+            <input type="radio" name="Sto-do-type" id="class" value="Assignment" required="required">
+            <label>Class</label>
+            <input type="radio" name="Sto-do-type" id="excur" value="extra-curricular" required="required">  
+          <label>Extra Curricular</label>
+        </div>
+
+        <label>Name:</label>
+        <input type="text" name="add-Cname" pattern="[A-Za-z0-9]{1,100}" placeholder="Class Name">
+        <label>Class:</label>
+        <input type="text" name="add-Aname" pattern="[A-Za-z0-9]{1,100}" placeholder="Assignment Title">
+        <label>Due Date:</label>
+        <input type="date" name="add-date" >
+        <label>Due Time:</label>
+        <input type="time" name="add-time">
+	<br>
+			
+        <input type="Submit" value="Add">
+    </form>
+    <br>
+    The radio button selected was: <?php echo $_GET["Sto-do-type"]?>
+    <br>
+    The following information was added: <?php echo "Class: " . $_GET["add-Cname"]. " Assignment: " . $_GET["add-Aname"]. " Date: " . $_GET["add-date"] . " Time: " . $_GET["add-time"];?>
+    
+ </div>
+ <br>
+ <div id="remove">
+ 	<!-- remove elements for to-dos here -->
+ 	<h2>Remove Your School To-Do:</h2>
+ 	<form action="project.php">
+ 		<label>To-Do ID:</label>
+ 		<input type="text" name="remove-to-do">
+ <br>
+	 <input type="submit" value="Remove">
+    </form>
+  </div>
+  <!-- this php code gets sql data -->
+  <?php 
+    $sql = "SELECT * FROM users"; 
+    $results = pg_query($dbhost, $sql);
+    
+    if(!$results){
+        die("Error in querey: " .pg_last_error());
+    }
+
+        while($row = pg_fetch_array($results)){
+            echo "Id:" . $row[0] . " Name: " . $row[1] . " Password: " . $row[2] . " Birthday: " . 
+            $row[3] . " Email: " . $row[4] . "<br/>\n";
+            }
+
+    //pg_free_results($results);
+    pg_close($dbhost);
+  ?>
  </body>
  </html>
+
+ 
+ 
+ 
