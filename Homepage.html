@@ -1,12 +1,14 @@
- <?php
 
-session_start();
+<?php
+
+//session_start();
  
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-}
-?>
+//if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+//   header("location: login.php");
+//   exit;
+//}
+//?>
+
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -44,8 +46,51 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <br>-->
 <div id="add">
     <!-- add elements for adding to-dos here -->
+    
+    <?php 
+    $answer = $_POST['PWto-do-type'];
+    
+    if($answer == "personal"){
+        
+        $sql = "INSERT INTO personal (to_do_id, user_id, Personal_to_do_name, p_date, p_time)
+    VALUES ('3','1','".$_POST["add-name"]."','".$_POST["add-date"]."','".$_POST["add-time"]."')";
+        
+        $results = pg_query($dbhost,$sql);
+        
+    } else {
+        
+        $sql = "INSERT INTO work (work_todo_id, user_id, work_name, w_date, w_time)
+    VALUES ('3','1','".$_POST["add-name"]."','".$_POST["add-date"]."','".$_POST["add-time"]."')";
+        
+        $results = pg_query($dbhost,$sql);
+    }
+    
+    
+    $answer2 = $_POST['Sto-do-type'];
+    
+    if($answer2 == "Assignment"){
+        
+        $sql = "INSERT INTO assignment (user_id, class_id, assignment_name, due_date, due_time)
+    VALUES ('$user_id','".$_POST["add-id"]."',','".$_POST["add-Aname"]."','".$_POST["add-date"]."','".$_POST["add-time"]."')";
+        
+        $results = pg_query($dbhost,$sql);
+        
+    } else {
+        
+        $sql = "INSERT INTO class (class_id, user_id, class_name, class_date, class_time, room)
+    VALUES (".$_POST["cid"]."','$user_id','".$_POST["add-Cname"]."','".$_POST["add-date"]."','".$_POST["add-time"]."','".$_POST["add-Rname"]."')";
+        
+        $results = pg_query($dbhost,$sql);
+    }
+  
+  /*
+  $sql = "INSERT INTO users1 (username,password,email) VALUES (?,?,?)";
+  $stmt->bind_param("sss", $_POST['username'],$_POST['password'],$_POST['email']);
+  $stmt->execute();
+  */
+  ?>
     <h2>Add Your Personal/Work To-Dos:</h2>
-    <form action="project.php" method="GET">
+    <form action="project.php" method="POST">
         <div>
             <input type="radio" name="PWto-do-type" id="personal" value="personal" required="required">
             <label>Personal</label>
@@ -62,11 +107,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<br>
 			
         <input type="Submit" value="Add">
+        <!-- insert into user (user_id.$_GET["add-name]) -->
     </form>
     <br>
-    The radio button selected was: <?php echo $_GET["PWto-do-type"]?>
+    The radio button selected was: <?php echo $_POST["PWto-do-type"]?>
     <br>
-    The following information was added: <?php echo "Name: " . $_GET["add-name"]. " Date: " . $_GET["add-date"] . " Time: " . $_GET["add-time"];?>
+    The following information was added: <?php echo "Name: " . $_POST["add-name"]. " Date: " . $_POST["add-date"] . " Time: " . $_POST["add-time"];?>
     
  </div>
  <br>
@@ -80,26 +126,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	 <input type="submit" value="Remove">
     </form>
   </div>
-  <br>
-  <br>
-  <br>
-  <br>
+ <br>
+  
+  
+  
+  
   
   <!-- start of school section -->
   
-  <h2>Add Your School To-Dos:</h2>
+  
+  
+  
+  
+  <h2>Add An Assignment:</h2>
     <form action="project.php" method="GET">
         <div>
             <input type="radio" name="Sto-do-type" id="class" value="Assignment" required="required">
             <label>Class</label>
-            <input type="radio" name="Sto-do-type" id="excur" value="extra-curricular" required="required">  
-          <label>Extra Curricular</label>
         </div>
 
-        <label>Name:</label>
-        <input type="text" name="add-Cname" pattern="[A-Za-z0-9]{1,100}" placeholder="Class Name">
-        <label>Class:</label>
-        <input type="text" name="add-Aname" pattern="[A-Za-z0-9]{1,100}" placeholder="Assignment Title">
+		<label>User id:</label>
+        <input type="int" name="add-UAid" pattern="[A-Za-z0-9 ]{1,100}" placeholder="User id">
+        <label>Class ID:</label>
+        <input type="text" name="add-id" pattern="[A-Za-z0-9 ]{1,100}" placeholder="Class id">
+        <label>Assignment title:</label>
+        <input type="text" name="add-Aname" pattern="[A-Za-z0-9 ]{1,100}" placeholder="Assignment Title">
         <label>Due Date:</label>
         <input type="date" name="add-date" >
         <label>Due Time:</label>
@@ -111,23 +162,55 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <br>
     The radio button selected was: <?php echo $_GET["Sto-do-type"]?>
     <br>
-    The following information was added: <?php echo "Class: " . $_GET["add-Cname"]. " Assignment: " . $_GET["add-Aname"]. " Date: " . $_GET["add-date"] . " Time: " . $_GET["add-time"];?>
+    The following information was added: <?php echo "Class id: " . $_GET["add-id"]. " Assignment Title: " . $_GET["add-Aname"]. " Date: " . $_GET["add-date"] . " Time: " . $_GET["add-time"];?>
     
  </div>
  <br>
  <div id="remove">
  	<!-- remove elements for to-dos here -->
- 	<h2>Remove Your School To-Do:</h2>
+ 	<h2>Remove Assignment:</h2>
  	<form action="project.php">
  		<label>To-Do ID:</label>
  		<input type="text" name="remove-to-do">
  <br>
 	 <input type="submit" value="Remove">
     </form>
-  </div>
+  </div> 
+  
+  <h2>Add A Class:</h2>
+    <form action="project.php" method="GET">
+        <div>
+            <input type="radio" name="Sto-do-type" id="class" value="Class" required="required">
+            <label>Class</label>
+        </div>
+        <label>User id:</label>
+        <input type="int" name="add-Uid" pattern="[A-Za-z0-9 ]{1,100}" placeholder="User id">
+        <label>Class Id:</label>
+        <input type="text" name="add-Cid" pattern="[A-Za-z0-9 ]{1,100}" placeholder="Class id">
+        <label>Class Name:</label>
+        <input type="text" name="add-Cname" pattern="[A-Za-z0-9 ]{1,100}" placeholder="Class Name">
+        <label>Classroom:</label>
+        <input type="text" name="add-Rname" pattern="[A-Za-z0-9 ]{1,100}" placeholder="Classroom">
+        <label>Due Date:</label>
+        <input type="date" name="add-date" >
+        <label>Due Time:</label>
+        <input type="time" name="add-time">
+	<br>
+			
+        <input type="Submit" value="Add">
+    </form>
+    <br>
+    The radio button selected was: <?php echo $_GET["Sto-do-type"]?>
+    <br>
+    The following information was added: <?php echo "User id: " . $_GET["add-Uid"]. "Class id: " . $_GET["add-Cid"]. "Class name: " . $_GET["add-Cname"]. 
+  " Classroom: " . $_GET["add-Rname"]. " Date: " . $_GET["add-date"] . " Time: " . $_GET["add-time"];?>
+    
+ </div>
+ <br>
+  
   <!-- this php code gets sql data -->
-  <?php 
-    $sql = "SELECT * FROM users"; 
+  <?php /*
+    $sql = "SELECT * FROM personal"; 
     $results = pg_query($dbhost, $sql);
     
     if(!$results){
@@ -141,7 +224,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
     //pg_free_results($results);
     pg_close($dbhost);
-  ?>
+ */ ?>
  </body>
  </html>
 
