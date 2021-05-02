@@ -33,29 +33,33 @@
 <div id="add">
     <!-- add elements for adding to-dos here -->
     <h2>Add Your To-Dos:</h2>
-    <form method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>>
+    <form action="project.php" method="GET">
         <div>
-            <input type="radio" name="to-do-type" id="personal" value="personal">
+            <input type="radio" name="to-do-type" id="personal" value="personal" required="required">
             <label>Personal</label>
-            <input type="radio" name="to-do-type" id="work" value="work">
+            <input type="radio" name="to-do-type" id="work" value="work" required="required">
             <label>Work</label>
-            <input type="radio" name="to-do-type" id="class" value="class">
+            <input type="radio" name="to-do-type" id="class" value="class" required="required">
             <label>Class</label>
-            <input type="radio" name="to-do-type" id="excur" value="extra-curricular">  
+            <input type="radio" name="to-do-type" id="excur" value="extra-curricular" required="required">  
           <label>Extra Curricular</label>
         </div>
 
         <label>Name:</label>
-        <input type="text" name="add-name">
+        <input type="text" name="add-name" pattern="[A-Za-z0-9]{1,100}" placeholder="1-100 letters">
         <label>Due Date:</label>
-        <input type="text" name="add-date">
+        <input type="date" name="add-date" >
         <label>Due Time:</label>
-        <input type="text" name="add-time">
+        <input type="time" name="add-time">
 	<br>
+			
         <input type="Submit" value="Add">
     </form>
     <br>
+    The radio button selected was: <?php echo $_GET["to-do-type"]?>
+    <br>
     The information added is: <?php echo "Name: " . $_GET["add-name"]. " Date: " . $_GET["add-date"] . " Time: " . $_GET["add-time"];?>
+    
  </div>
  <br>
  <div id="remove">
