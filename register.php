@@ -1,4 +1,5 @@
 <?php
+
   $myfile = fopen("../pg_connection_info.txt", "r") or die("Unable to open \"../pg_connection_info.txt\" file!");
     $my_host = fgets($myfile);
     $my_dbname = fgets($myfile);
@@ -58,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         if($stmt = mysqli_prepare($dbhost, $sql)){
             
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            mysqli_stmt_bind_param($stmt, "s", $param_email);
             
             
             $param_email = trim($_POST["email"]);
@@ -106,7 +107,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err)){
         
         
-        $sql = "INSERT INTO users (user_id, name, password, email) VALUES (?, ?)";
+        $sql = "INSERT INTO users (user_id, name, password, email) VALUES ('$User_id', '$name', '$password', '$email')";
          
         if($stmt = mysqli_prepare($dbhost, $sql)){
             
@@ -144,7 +145,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="wrapper">
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>
+        <form action= "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" name="name" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" value="">
