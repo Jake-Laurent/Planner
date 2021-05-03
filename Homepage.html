@@ -195,8 +195,16 @@
  	<!-- remove elements for to-dos here -->
  	<h2>Remove Assignment:</h2>
  	<form action="project.php">
- 		<label>To-Do ID:</label>
- 		<input type="text" name="remove-to-do">
+
+        <?php
+            $removename = $_POST['assignment-remove-to-do'];
+
+            $sql = "DELETE FROM assignment WHERE assignment_name =".$removename;
+            $results = pg_query($dbhost,$sql);
+        ?>
+
+ 		<label>To-Do Name:</label>
+ 		<input type="text" name="assignment-remove-to-do">
  <br>
 	 <input type="submit" value="Remove">
     </form>
