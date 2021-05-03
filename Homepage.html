@@ -118,11 +118,19 @@
  <br>
  <div id="remove">
  	<!-- remove elements for to-dos here -->
+
+     <?php
+     $removeid = $_POST['remove-to-do'];
+
+     $sql = DELETE FROM personal WHERE to_do_id = $removeid;
+     $results = pg_query($dbhost,$sql);
+     ?>
+
  	<h2>Remove Your Personal/Work To-Do:</h2>
  	<form action="project.php">
  		<label>To-Do ID:</label>
  		<input type="text" name="remove-to-do">
- <br>
+    <br>
 	 <input type="submit" value="Remove">
     </form>
   </div>
