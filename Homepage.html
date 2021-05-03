@@ -126,13 +126,13 @@
     if($answer == "personal"){
         $removeid = $_POST['remove-to-do'];
 
-        $sql = DELETE FROM personal WHERE to_do_id = $removeid;
+        $sql = "DELETE FROM personal WHERE to_do_id =".$removeid;
         $results = pg_query($dbhost,$sql);
     }
     else{
         $removeid = $_POST['remove-to-do'];
 
-        $sql = DELETE FROM work WHERE work_todo_id = $removeid;
+        $sql = "DELETE FROM work WHERE work_todo_id =".$removeid;
         $results = pg_query($dbhost,$sql);
     }
     ?>
