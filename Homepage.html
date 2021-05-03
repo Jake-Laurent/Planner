@@ -120,14 +120,31 @@
  	<!-- remove elements for to-dos here -->
 
      <?php
-     $removeid = $_POST['remove-to-do'];
 
-     $sql = "DELETE FROM personal WHERE to_do_id =".$removeid;
-     $results = pg_query($dbhost,$sql);
-     ?>
+    $removeanswer = $_POST['PWremove-to-do-type'];
+
+    if($answer == "personal"){
+        $removeid = $_POST['remove-to-do'];
+
+        $sql = DELETE FROM personal WHERE to_do_id = $removeid;
+        $results = pg_query($dbhost,$sql);
+    }
+    else{
+        $removeid = $_POST['remove-to-do'];
+
+        $sql = DELETE FROM work WHERE work_todo_id = $removeid;
+        $results = pg_query($dbhost,$sql);
+    }
+    ?>
 
  	<h2>Remove Your Personal/Work To-Do:</h2>
  	<form action="project.php">
+		<div>
+		    <input type="radio" name="PWremove-to-do-type" id="personal" value="personal" required="required">
+		    <label>Personal</label>
+		    <input type="radio" name="PWremove-to-do-type" id="work" value="work" required="required">
+		    <label>Work</label>
+		</div>
  		<label>To-Do ID:</label>
  		<input type="text" name="remove-to-do">
     <br>
